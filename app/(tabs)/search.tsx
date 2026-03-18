@@ -35,7 +35,7 @@ export default function SearchTab() {
   };
 
   const handleSelect = (id: string) => {
-    saveRecent(query);
+    if (query) saveRecent(query);
     router.push(('/place/' + id) as any);
   };
 

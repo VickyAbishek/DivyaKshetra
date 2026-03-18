@@ -3,23 +3,17 @@ import { useSearch } from '../../hooks/useSearch';
 
 jest.mock('../../lib/supabase', () => ({
   supabase: {
-    from: () => ({
-      select: () => ({
-        ilike: () => ({
-          limit: () => Promise.resolve({
-            data: [{
-              id: '1',
-              name: 'Palani Murugan Temple',
-              category: 'temple',
-              district: 'Palani',
-              state: 'Tamil Nadu',
-              lat: 10.4,
-              lng: 77.5,
-            }],
-            error: null,
-          }),
-        }),
-      }),
+    rpc: (_fn: string, _params: any) => Promise.resolve({
+      data: [{
+        id: '1',
+        name: 'Palani Murugan Temple',
+        category: 'temple',
+        district: 'Palani',
+        state: 'Tamil Nadu',
+        lat: 10.4,
+        lng: 77.5,
+      }],
+      error: null,
     }),
   },
 }));

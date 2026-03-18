@@ -29,21 +29,23 @@ export function useSearch() {
   useEffect(() => {
     if (!query || query.length < 2) { setResults([]); return; }
     clearTimeout(debounce.current);
+    let active = true;
     debounce.current = setTimeout(async () => {
       setLoading(true);
       try {
         const { data } = await supabase
-          .from('places')
-          .select('id, name, category, deity, district, state, lat, lng')
-          .ilike('name', `%${query}%`)
-          .limit(20);
-        setResults(data ?? []);
+          .rpc('search_places', { search_query: query });
+        if (active) setResults(data ?? []);
       } catch {
-        setResults([]);
+        if (active) setResults([]);
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     }, 300);
+    return () => {
+      active = false;
+      clearTimeout(debounce.current);
+    };
   }, [query]);
 
   const saveRecent = async (q: string) => {

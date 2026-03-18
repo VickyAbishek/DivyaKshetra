@@ -76,3 +76,21 @@ returns table (
   where status = 'approved'
     and location && ST_MakeEnvelope(min_lng, min_lat, max_lng, max_lat, 4326)::geography;
 $$;
+
+-- Search places by name (returns lat/lng extracted from PostGIS geography)
+create or replace function search_places(search_query text)
+returns table (
+  id uuid, name text, category text, deity text,
+  lat float, lng float, district text, state text, verified_at timestamptz
+)
+language sql security definer as $$
+  select
+    id, name, category, deity,
+    ST_Y(location::geometry) as lat,
+    ST_X(location::geometry) as lng,
+    district, state, verified_at
+  from places
+  where status = 'approved'
+    and name ilike '%' || search_query || '%'
+  limit 20;
+$$;
