@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity,
-  StyleSheet, RefreshControl,
+  StyleSheet, RefreshControl, ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSubmissions } from '../../hooks/useSubmissions';
@@ -27,7 +27,15 @@ export default function StatusTab() {
     setRefreshing(false);
   };
 
-  if (!loading && submissions.length === 0) {
+  if (loading) {
+    return (
+      <View style={{ flex: 1, backgroundColor: colors.sandalwood, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator color={colors.saffron} />
+      </View>
+    );
+  }
+
+  if (submissions.length === 0) {
     return (
       <View style={styles.emptyContainer}>
         <Text style={styles.emptyIcon}>🙏</Text>
