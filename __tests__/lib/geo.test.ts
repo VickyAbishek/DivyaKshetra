@@ -13,8 +13,10 @@ describe('haversineKm', () => {
 });
 
 describe('boundingBox', () => {
-  it('returns a box of ~2km radius around a point', () => {
+  it('returns a box of ~1km radius around a point', () => {
     const box = boundingBox(12.9716, 77.5946, 1);
+    // latDelta for 1km ≈ 0.009 degrees, total span ≈ 0.018
+    expect(box.maxLat - box.minLat).toBeCloseTo(0.018, 2);
     expect(box.minLat).toBeLessThan(12.9716);
     expect(box.maxLat).toBeGreaterThan(12.9716);
     expect(box.minLng).toBeLessThan(77.5946);
