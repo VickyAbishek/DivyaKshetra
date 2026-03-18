@@ -43,7 +43,6 @@ export function PhotoUploader({ uris, onChange }: Props) {
           </TouchableOpacity>
         )}
       </View>
-      <Text style={styles.skip}>Skip for now — you can add photos later</Text>
     </View>
   );
 }

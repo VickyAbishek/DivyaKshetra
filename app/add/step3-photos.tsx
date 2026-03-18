@@ -27,6 +27,12 @@ export default function Step3() {
           uris={form.photoUris ?? []}
           onChange={(uris) => setForm({ photoUris: uris })}
         />
+        <TouchableOpacity
+          style={styles.skipLink}
+          onPress={() => router.push('/add/step4-details' as any)}
+        >
+          <Text style={styles.skipText}>Skip for now — you can add photos later</Text>
+        </TouchableOpacity>
       </ScrollView>
       <View style={styles.footer}>
         <TouchableOpacity style={styles.cta} onPress={() => router.push('/add/step4-details' as any)}>
@@ -49,4 +55,6 @@ const styles = StyleSheet.create({
   },
   cta: { backgroundColor: colors.saffron, borderRadius: 12, height: 42, alignItems: 'center', justifyContent: 'center' },
   ctaText: { color: '#fff', fontSize: 13, fontWeight: '700' },
+  skipLink: { alignItems: 'center', marginTop: 8, paddingVertical: 6 },
+  skipText: { fontSize: 10, color: colors.terracotta, textDecorationLine: 'underline' },
 });

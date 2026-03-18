@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StepHeader } from '../../components/add/StepHeader';
 import { LocationPicker } from '../../components/add/LocationPicker';
 import { useAddForm } from '../../lib/addFormStore';
@@ -9,8 +9,16 @@ import { colors } from '../../constants/colors';
 export default function Step1() {
   const router = useRouter();
   const { form, setForm } = useAddForm();
+  const { editPlaceId: editPlaceIdParam } = useLocalSearchParams<{ editPlaceId?: string }>();
   const lat = form.lat ?? 20.5937;
   const lng = form.lng ?? 78.9629;
+
+  React.useEffect(() => {
+    if (editPlaceIdParam || form.editPlaceId) {
+      setForm({ editPlaceId: editPlaceIdParam });
+      router.replace('/add/step2-info' as any);
+    }
+  }, []);
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.sandalwood }}>
