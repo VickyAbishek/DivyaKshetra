@@ -5,13 +5,17 @@ import { colors } from '../../constants/colors';
 
 export function SplashScreen({ onDone }: { onDone: () => void }) {
   const opacity = useRef(new Animated.Value(0)).current;
+  const onDoneRef = useRef(onDone);
+  const mounted = useRef(true);
 
   useEffect(() => {
-    Animated.sequence([
+    const anim = Animated.sequence([
       Animated.timing(opacity, { toValue: 1, duration: 600, useNativeDriver: true }),
       Animated.delay(1200),
       Animated.timing(opacity, { toValue: 0, duration: 400, useNativeDriver: true }),
-    ]).start(() => onDone());
+    ]);
+    anim.start(() => { if (mounted.current) onDoneRef.current(); });
+    return () => { mounted.current = false; anim.stop(); };
   }, []);
 
   return (
