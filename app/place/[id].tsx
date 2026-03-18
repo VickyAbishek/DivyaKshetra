@@ -75,12 +75,12 @@ export default function PlaceScreen() {
             </>
           )}
 
-          {(place.photo_urls?.length ?? 0) > 0 && (
+          {!isPending && (
             <>
               <Text style={styles.sectionTitle}>Photos</Text>
               <PhotoStrip
                 photoUrls={place.photo_urls ?? []}
-                onAddPhoto={isPending ? undefined : () => {/* photo upload — Task 6 */}}
+                onAddPhoto={() => {/* photo upload — Task 6 */}}
               />
             </>
           )}
