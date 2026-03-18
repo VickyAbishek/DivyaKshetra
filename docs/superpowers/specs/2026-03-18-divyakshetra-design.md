@@ -65,7 +65,7 @@ DivyaKshetra is a community-driven spiritual map of India for discovering Hindu 
 | Temple | 🛕 | Saffron `#C0541A` |
 | Samadhi | 🧘 | Sacred Gold `#E8C06A` |
 | Ashram | 🌿 | Terracotta `#7A4A2A` |
-| Sacred Water | 💧 | Deep Ebony `#3D2010` |
+| Sacred Water | 💧 | Deep Blue-Brown `#3D4A6A` |
 
 ### 3.5 Map Markers
 Custom spiritual pins: category emoji inside a circle (category colour fill, gold/parchment border), tapered stem, drop shadow. Non-selected markers dim to 40% opacity when a bottom sheet is open. Selected marker gets a gold glow ring + 1.15× scale.
@@ -199,6 +199,7 @@ Common header across all steps:
 - Additional photo slots row (3× empty dashed thumbs)
 - Already-added thumbs show green ✓ badge
 - "Skip for now — you can add photos later" in small muted text (below)
+- **Photo re-entry:** The "+ Add" slot in Place Details (Section 4.2) is the post-submission re-entry point. It is disabled while the place is Under Review. It becomes active only after the place is Approved.
 - CTA: "Next: More Details →"
 
 **Step 4 — Additional Details**
@@ -222,7 +223,7 @@ Common header across all steps:
 
 ### 4.4 Screen 4 — Submission Status
 
-**Access model:** Submissions stored in device AsyncStorage keyed to a local session token. Users shown a "submission code" to recover across reinstalls. No login required.
+**Access model:** Submissions stored in device AsyncStorage keyed to a local session token (UUID v4, generated on first launch). Users shown a **submission code** (first 8 chars of UUID, uppercase, e.g. `A3F7B2C1`) displayed in a "Recovery" section within the Submission Status screen. To recover submissions on a new device, user enters this code in Settings → "Recover My Submissions" — the app fetches submissions matching that token from Supabase. No login required.
 
 **List view:**
 - Dark nav bar: "My Submissions" title + "Stored on this device · No account needed" caption
@@ -314,7 +315,11 @@ Navigation patterns:
 - Map marker tap → bottom sheet peek → swipe/tap → Place Details (push)
 - Bottom sheet "View Details →" → Place Details (push)
 - Search result tap → Place Details (push)
-- Place Details "Suggest Edit" → Add New Place (Step 2 pre-filled, edit mode)
+- Place Details "Suggest Edit" → Add New Place (Step 2 pre-filled, **edit mode**):
+  - Progress bar title changes to "Suggest an Edit"
+  - Submission routed to a separate `suggested_edits` backend table (not the same as a new place submission)
+  - Step 1 (Location) is skipped — location is not editable via Suggest Edit
+  - Step 5 CTA reads "Submit Suggestion 🙏" instead of "Submit for Review 🙏"
 - Status card "Resubmit" → Add New Place (Step 1, pre-filled from original)
 
 ---
