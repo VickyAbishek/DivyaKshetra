@@ -59,3 +59,20 @@ create policy "Public read approved" on places for select using (status = 'appro
 alter table submissions enable row level security;
 create policy "Insert submissions" on submissions for insert with check (true);
 create policy "Read own submissions" on submissions for select using (device_token = current_setting('app.device_token', true));
+
+-- RPC function for bounding-box place lookup
+create or replace function places_in_bbox(min_lng float, min_lat float, max_lng float, max_lat float)
+returns table (
+  id uuid, name text, category text, deity text,
+  lat float, lng float, district text, state text,
+  status text, verified_at timestamptz
+) language sql security definer as $$
+  select
+    id, name, category, deity,
+    ST_Y(location::geometry) as lat,
+    ST_X(location::geometry) as lng,
+    district, state, status, verified_at
+  from places
+  where status = 'approved'
+    and location && ST_MakeEnvelope(min_lng, min_lat, max_lng, max_lat, 4326)::geography;
+$$;

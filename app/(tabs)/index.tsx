@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 import { useRouter } from 'expo-router';
 import { SpiritualMap } from '../../components/map/SpiritualMap';
@@ -34,15 +34,10 @@ export default function ExploreTab() {
   return (
     <View style={styles.container}>
       {/* Floating search bar */}
-      <View style={styles.searchBar}>
+      <TouchableOpacity style={styles.searchBar} onPress={() => router.push('/search' as any)} activeOpacity={0.8}>
         <Text style={styles.searchIcon}>🔍</Text>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search temples, deities, places…"
-          placeholderTextColor={colors.terracotta}
-          onFocus={() => router.push('/search' as any)}
-        />
-      </View>
+        <Text style={styles.searchPlaceholder}>Search temples, deities, places…</Text>
+      </TouchableOpacity>
 
       {/* Filter chips */}
       <ScrollView
@@ -97,7 +92,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000', shadowOpacity: 0.3, shadowRadius: 8, elevation: 5,
   },
   searchIcon: { fontSize: 14 },
-  searchInput: { flex: 1, fontSize: 13, color: colors.deepEbony },
+  searchPlaceholder: { flex: 1, fontSize: 13, color: colors.terracotta },
   chips: { position: 'absolute', top: 98, left: 0, right: 0, zIndex: 10 },
   chip: { height: 28, paddingHorizontal: 12, borderRadius: 20, backgroundColor: 'rgba(245,230,200,0.92)', justifyContent: 'center' },
   chipActive: { backgroundColor: colors.saffron },

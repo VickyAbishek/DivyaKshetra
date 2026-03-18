@@ -24,20 +24,18 @@ export function usePlaces(lat: number | null, lng: number | null, radiusKm = 50)
     if (lat === null || lng === null) return;
     const box = boundingBox(lat, lng, radiusKm);
     setLoading(true);
+    setError(null);
+
     supabase
-      .from('places')
-      .select('id, name, category, deity, district, state, status, verified_at, location')
-      .gte('location', `POINT(${box.minLng} ${box.minLat})`)
-      .lte('location', `POINT(${box.maxLng} ${box.maxLat})`)
+      .rpc('places_in_bbox', {
+        min_lng: box.minLng,
+        min_lat: box.minLat,
+        max_lng: box.maxLng,
+        max_lat: box.maxLat,
+      })
       .then(({ data, error: err }) => {
         if (err) { setError(err.message); setLoading(false); return; }
-        setPlaces(
-          (data ?? []).map((p: any) => ({
-            ...p,
-            lat: p.location?.coordinates?.[1] ?? 0,
-            lng: p.location?.coordinates?.[0] ?? 0,
-          }))
-        );
+        setPlaces(data ?? []);
         setLoading(false);
       });
   }, [lat, lng, radiusKm]);
