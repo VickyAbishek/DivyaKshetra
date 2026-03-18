@@ -14,14 +14,18 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.divyakshetra.app"
+      "bundleIdentifier": "com.divyakshetra.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "DivyaKshetra uses your location to find sacred places nearby."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#F5E6C8"
       },
-      "package": "com.divyakshetra.app"
+      "package": "com.divyakshetra.app",
+      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
     },
     "web": {
       "bundler": "metro",
@@ -30,7 +34,8 @@
     },
     "plugins": [
       "expo-router",
-      "expo-image-picker"
+      "expo-image-picker",
+      "expo-location"
     ],
     "experiments": {
       "typedRoutes": true
