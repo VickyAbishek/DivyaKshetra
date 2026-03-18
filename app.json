@@ -16,7 +16,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.divyakshetra.app",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "DivyaKshetra uses your location to find sacred places nearby."
+        "NSCameraUsageDescription": "DivyaKshetra needs camera access to photograph sacred places.",
+        "NSPhotoLibraryUsageDescription": "DivyaKshetra needs photo library access to attach photos to place submissions.",
+        "NSLocationWhenInUseUsageDescription": "DivyaKshetra uses your location to show nearby sacred places."
       }
     },
     "android": {
@@ -25,7 +27,7 @@
         "backgroundColor": "#F5E6C8"
       },
       "package": "com.divyakshetra.app",
-      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
+      "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE", "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
     },
     "web": {
       "bundler": "metro",
