@@ -1,3 +1,6 @@
+-- Enable PostGIS extension (required for geography type and ST_* functions)
+create extension if not exists postgis;
+
 -- Places table
 create table places (
   id uuid primary key default gen_random_uuid(),
