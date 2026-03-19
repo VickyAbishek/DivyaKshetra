@@ -18,7 +18,8 @@
       "infoPlist": {
         "NSCameraUsageDescription": "DivyaKshetra needs camera access to photograph sacred places.",
         "NSPhotoLibraryUsageDescription": "DivyaKshetra needs photo library access to attach photos to place submissions.",
-        "NSLocationWhenInUseUsageDescription": "DivyaKshetra uses your location to show nearby sacred places."
+        "NSLocationWhenInUseUsageDescription": "DivyaKshetra uses your location to show nearby sacred places.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -27,7 +28,14 @@
         "backgroundColor": "#F5E6C8"
       },
       "package": "com.divyakshetra.app",
-      "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE", "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -37,10 +45,26 @@
     "plugins": [
       "expo-router",
       "expo-image-picker",
-      "expo-location"
+      "expo-location",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "kotlinVersion": "1.9.25"
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d88f740c-bfea-45e0-abba-45b27a78b064"
+      }
     }
   }
 }
